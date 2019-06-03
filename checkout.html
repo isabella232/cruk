@@ -403,11 +403,693 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 				<input type="radio" id="paypal-payment" name="donation-method" data-target="PAYPAL_EC" data-applepay="false" value="paypal-payment">
 				PayPal
 				<img src="./checkout_cruk_files/paypal.png" alt="Pay with PayPal" class="paypal-logo">
-			</label>
+            </label>
+            
+            <label for="alice-payment" class="checkbox-button-group donation-method js-donation-method" onclick="startAliceDonation()">
+                <input type="radio" id="alice-payment" name="donation-method" data-target="ALICE_EC" data-applepay="false" value="alice-payment">
+                Alice SI
+                <img style="padding-right: 150px; height: 25px" src="https://alice-res.s3.eu-west-2.amazonaws.com/alice_dark_new.png" alt="Donate with Alice" class="alice-logo">
+            </label>
 
-		</div>
+        </div>
 
 </fieldset>
+
+<div id="credit-card-details-container" style="display:none;"><fieldset class="fieldset">
+
+        <div id="credit-card-details">
+        
+            <h2>Donation method: Credit/debit card</h2>
+        
+            <div class="row cc-row">
+                <div class="col-sm-3 form-label">
+                    <label for="cc-number">Cardholder name</label>
+                </div>
+        
+                <div class="col-sm-8">
+                    <input type="text" class="text payment-field required" id="payment_card-name" name="payment_card-name" data-field-name="payment_card.name" value="">
+                </div>
+            </div>
+            <div class="row cc-row">
+                    <div class="col-sm-3 form-label">
+                        <label for="email">Email</label>
+                    </div>
+            
+                    <div class="col-sm-8">
+                        <input type="text" class="text payment-field required" id="email" name="email" data-field-name="payment_card.name" value="">
+                    </div>
+                </div>
+            
+            <div class="row">
+                <div class="col-sm-3 form-label">
+                    <label for="cc-number">Card number</label>
+                </div>
+        
+                <div class="col-sm-8">
+                    <input type="tel" class="text payment-field" id="cc-number" name="cc-number" data-field-name="payment_card.number" value="" autocomplete="off">
+                    <ul id="cc-types">
+                        <li id="visa" style="opacity: 1;"></li>
+                        <li id="visa_electron" style="opacity: 1;"></li>
+                        <li id="mastercard" style="opacity: 1;"></li>
+                            <li id="amex" style="opacity: 1;"></li>
+                        <li id="jcb" style="opacity: 1;"></li>
+                        <li id="maestro" style="opacity: 1;"></li>
+                    </ul>
+                </div>
+            </div>
+
+            
+        
+            <div class="row" id="start-date-container" style="display: none;">
+                <div class="col-sm-3 form-label">
+                    <label for="payment_card-expiry_date-month">Start date</label>
+                </div>
+                <div class="col-sm-3">
+                    <select class="payment-field" id="payment_card-start_date-month" name="payment_card-start_date-month" data-field-name="payment_card.start_date.month">
+                            <option value="">Month</option>
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                    </select>
+        
+        
+                    <select class="payment-field" id="payment_card-start_date-year" name="payment_card-start_date-year" data-field-name="payment_card.start_date.year">
+                            <option value="">Year</option>
+                            <option value="2019">2019</option><option value="2018">2018</option><option value="2017">2017</option><option value="2016">2016</option><option value="2015">2015</option><option value="2014">2014</option><option value="2013">2013</option><option value="2012">2012</option><option value="2011">2011</option><option value="2010">2010</option><option value="2009">2009</option><option value="2008">2008</option><option value="2007">2007</option><option value="2006">2006</option><option value="2005">2005</option><option value="2004">2004</option><option value="2003">2003</option><option value="2002">2002</option><option value="2001">2001</option><option value="2000">2000</option><option value="1999">1999</option>
+                    </select>
+                    <div id="start-date-error">
+                        <label for="ccStartDateFields" class="error">
+        
+                        </label>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="row">
+                <div class="col-sm-3 form-label">
+                    <label for="payment_card-expiry_date-month">Expiry date</label>
+                </div>
+                <div class="col-sm-3">
+                    <select class="payment-field" id="payment_card-expiry_date-month" name="payment_card-expiry_date-month" data-field-name="payment_card.expiry_date.month">
+                            <option value="">Month</option>
+                            <option value="01" selected>01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                    </select>
+        
+                    <select class="payment-field" id="payment_card-expiry_date-year" name="payment_card-expiry_date-year" data-field-name="payment_card.expiry_date.year">
+                            <option value="">Year</option>
+                            <option value="2019">2019</option><option selected value="2020">2020</option><option value="2021">2021</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option><option value="2028">2028</option><option value="2029">2029</option><option value="2030">2030</option><option value="2031">2031</option><option value="2032">2032</option><option value="2033">2033</option><option value="2034">2034</option><option value="2035">2035</option><option value="2036">2036</option><option value="2037">2037</option><option value="2038">2038</option><option value="2039">2039</option>
+                    </select>
+        
+                    <div id="date-error">
+                        <label for="ccDateFields" class="error">
+        
+                        </label>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="row cc-security-col input-small">
+              <div class="form-label">
+                  <label class="security-code-label" for="payment_card-cvc">Security code</label>
+              </div>
+                  <input type="tel" class="text payment-field" id="cvv" name="cvv" maxlength="4" data-field-name="payment_card.cvc" value="" autocomplete="off">
+                <a id="ccvInfo" class="cvv-toggle" href="#">What's this?</a>
+                <div id="modal-bg-ccv" class="modal-bg"></div>
+                <div id="ccvInfo-hidden">
+        
+                    <div id="ccvClose" class="cvv-toggle">Close [X]</div>
+                    <div class="row row1">
+                        <div class="col-xs-6 omega"><img src="//d77hrzbdrgc46.cloudfront.net//assets/T8PCRa4zh5i-OmXj1wYoow==/themes/cruk/campaign/images/visa-ccv.gif"></div>
+                        <div class="col-xs-6">
+                            <p>Some cards, many UK-issued cards for example, have a three-digit number printed at the top of the signature strip on the reverse of the card.</p>
+                        </div>
+                    </div>
+                        <div class="row row2">
+                            <div class="col-xs-6 omega"><img src="//d77hrzbdrgc46.cloudfront.net//assets/T8PCRa4zh5i-OmXj1wYoow==/themes/cruk/campaign/images/amex-ccv.gif"></div>
+                            <div class="col-xs-6">
+                                <p>Other, American Express cards for example, have a four-digit number printed on the front of the card, above the account number.</p>
+                            </div>
+                        </div>
+                </div>
+        
+            </div>
+        
+            <!-- <label for="diff-billing-addr" class="checkbox-button-group js-billing-address-toggle">
+              <input type="checkbox" id="diff-billing-addr" name="diff-billing-addr">
+              My billing address is different to my home address
+            </label> -->
+        
+            <div id="billing-details" class="hidden">
+        
+                <h2>Your details</h2>
+        
+                <div class="row form-details-row">
+                    <div class="col-sm-5 form-label">
+                        <label for="home-address">Address line 1</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="text" class="text diff-billing-field" id="billing_address-line1" name="billing_address-line1" data-field-name="billing_address.line1" autocomplete="off">
+                    </div>
+                </div>
+        
+                <div class="row form-details-row">
+                    <div class="col-sm-5 form-label">
+                        <label for="address-2">Address line 2</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="text" class="text diff-billing-field address-field" id="billing_address-line2" name="billing_address-line2" data-field-name="billing_address.line2">
+                    </div>
+                </div>
+        
+                <div class="row form-details-row">
+                    <div class="col-sm-5 form-label">
+                        <label for="address-3">Address line 3</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="text" class="text diff-billing-field address-field" id="billing_address-line3" name="billing_address-line3" data-field-name="billing_address.line3">
+                    </div>
+                </div>
+        
+                <div class="row form-details-row">
+                    <div class="col-sm-5 form-label">
+                        <label for="town-city">Town/City</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="text" class="text diff-billing-field address-field" id="billing_address-town" name="billing_address-town" data-field-name="billing_address.town">
+                    </div>
+                </div>
+        
+                <div class="row form-details-row">
+                    <div class="col-sm-5 form-label">
+                        <label for="post-code">Postcode</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="text" class="text diff-billing-field address-field" id="billing_address-postal_code" name="billing_address-postal_code" data-field-name="billing_address.postal_code" autocomplete="off">
+                    </div>
+                </div>
+        
+                <div class="row form-details-row">
+                    <div class="col-sm-5 form-label">
+                        <label for="country">Country</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <select id="billing_address-country" class="diff-billing-field address-field" name="billing_address-country" data-field-name="billing_address.country">
+                            <option value="GB" selected="selected">United Kingdom</option>
+                            <option value="AF">Afghanistan</option>
+                            <option value="AL">Albania</option>
+                            <option value="DZ">Algeria</option>
+                            <option value="AS">American Samoa</option>
+                            <option value="AD">Andorra</option>
+                            <option value="AO">Angola</option>
+                            <option value="AI">Anguilla</option>
+                            <option value="AG">Antigua &amp; Barbuda</option>
+                            <option value="AR">Argentina</option>
+                            <option value="AA">Armenia</option>
+                            <option value="AW">Aruba</option>
+                            <option value="AU">Australia</option>
+                            <option value="AT">Austria</option>
+                            <option value="AZ">Azerbaijan</option>
+                            <option value="BS">Bahamas</option>
+                            <option value="BH">Bahrain</option>
+                            <option value="BD">Bangladesh</option>
+                            <option value="BB">Barbados</option>
+                            <option value="BY">Belarus</option>
+                            <option value="BE">Belgium</option>
+                            <option value="BZ">Belize</option>
+                            <option value="BJ">Benin</option>
+                            <option value="BM">Bermuda</option>
+                            <option value="BT">Bhutan</option>
+                            <option value="BO">Bolivia</option>
+                            <option value="BL">Bonaire</option>
+                            <option value="BA">Bosnia &amp; Herzegovina</option>
+                            <option value="BW">Botswana</option>
+                            <option value="BR">Brazil</option>
+                            <option value="BC">British Indian Ocean Ter</option>
+                            <option value="BN">Brunei</option>
+                            <option value="BG">Bulgaria</option>
+                            <option value="BF">Burkina Faso</option>
+                            <option value="BI">Burundi</option>
+                            <option value="KH">Cambodia</option>
+                            <option value="CM">Cameroon</option>
+                            <option value="CA">Canada</option>
+                            <option value="IC">Canary Islands</option>
+                            <option value="CV">Cape Verde</option>
+                            <option value="KY">Cayman Islands</option>
+                            <option value="CF">Central African Republic</option>
+                            <option value="TD">Chad</option>
+                            <option value="CD">Channel Islands</option>
+                            <option value="CL">Chile</option>
+                            <option value="CN">China</option>
+                            <option value="CI">Christmas Island</option>
+                            <option value="CS">Cocos Island</option>
+                            <option value="CO">Colombia</option>
+                            <option value="CC">Comoros</option>
+                            <option value="CG">Congo</option>
+                            <option value="CK">Cook Islands</option>
+                            <option value="CR">Costa Rica</option>
+                            <option value="CT">Cote D'Ivoire</option>
+                            <option value="HR">Croatia</option>
+                            <option value="CU">Cuba</option>
+                            <option value="CB">Curacao</option>
+                            <option value="CY">Cyprus</option>
+                            <option value="CZ">Czech Republic</option>
+                            <option value="DK">Denmark</option>
+                            <option value="DJ">Djibouti</option>
+                            <option value="DM">Dominica</option>
+                            <option value="DO">Dominican Republic</option>
+                            <option value="TM">East Timor</option>
+                            <option value="EC">Ecuador</option>
+                            <option value="EG">Egypt</option>
+                            <option value="SV">El Salvador</option>
+                            <option value="GQ">Equatorial Guinea</option>
+                            <option value="ER">Eritrea</option>
+                            <option value="EE">Estonia</option>
+                            <option value="ET">Ethiopia</option>
+                            <option value="FA">Falkland Islands</option>
+                            <option value="FO">Faroe Islands</option>
+                            <option value="FJ">Fiji</option>
+                            <option value="FI">Finland</option>
+                            <option value="FR">France</option>
+                            <option value="GF">French Guiana</option>
+                            <option value="PF">French Polynesia</option>
+                            <option value="FS">French Southern Ter</option>
+                            <option value="GA">Gabon</option>
+                            <option value="GM">Gambia</option>
+                            <option value="GE">Georgia</option>
+                            <option value="DE">Germany</option>
+                            <option value="GH">Ghana</option>
+                            <option value="GI">Gibraltar</option>
+                            <option value="GB" selected="selected">Great Britain</option>
+                            <option value="GR">Greece</option>
+                            <option value="GL">Greenland</option>
+                            <option value="GD">Grenada</option>
+                            <option value="GP">Guadeloupe</option>
+                            <option value="GU">Guam</option>
+                            <option value="GT">Guatemala</option>
+                            <option value="GN">Guinea</option>
+                            <option value="GY">Guyana</option>
+                            <option value="HT">Haiti</option>
+                            <option value="HW">Hawaii</option>
+                            <option value="HN">Honduras</option>
+                            <option value="HK">Hong Kong</option>
+                            <option value="HU">Hungary</option>
+                            <option value="IS">Iceland</option>
+                            <option value="IN">India</option>
+                            <option value="ID">Indonesia</option>
+                            <option value="IA">Iran</option>
+                            <option value="IQ">Iraq</option>
+                            <option value="IR">Ireland</option>
+                            <option value="IM">Isle of Man</option>
+                            <option value="IL">Israel</option>
+                            <option value="IT">Italy</option>
+                            <option value="JM">Jamaica</option>
+                            <option value="JP">Japan</option>
+                            <option value="JO">Jordan</option>
+                            <option value="KZ">Kazakhstan</option>
+                            <option value="KE">Kenya</option>
+                            <option value="KI">Kiribati</option>
+                            <option value="NK">Korea North</option>
+                            <option value="KS">Korea South</option>
+                            <option value="KW">Kuwait</option>
+                            <option value="KG">Kyrgyzstan</option>
+                            <option value="LA">Laos</option>
+                            <option value="LV">Latvia</option>
+                            <option value="LB">Lebanon</option>
+                            <option value="LS">Lesotho</option>
+                            <option value="LR">Liberia</option>
+                            <option value="LY">Libya</option>
+                            <option value="LI">Liechtenstein</option>
+                            <option value="LT">Lithuania</option>
+                            <option value="LU">Luxembourg</option>
+                            <option value="MO">Macau</option>
+                            <option value="MK">Macedonia</option>
+                            <option value="MG">Madagascar</option>
+                            <option value="MY">Malaysia</option>
+                            <option value="MW">Malawi</option>
+                            <option value="MV">Maldives</option>
+                            <option value="ML">Mali</option>
+                            <option value="MT">Malta</option>
+                            <option value="MH">Marshall Islands</option>
+                            <option value="MQ">Martinique</option>
+                            <option value="MR">Mauritania</option>
+                            <option value="MU">Mauritius</option>
+                            <option value="ME">Mayotte</option>
+                            <option value="MX">Mexico</option>
+                            <option value="MI">Midway Islands</option>
+                            <option value="MD">Moldova</option>
+                            <option value="MC">Monaco</option>
+                            <option value="MN">Mongolia</option>
+                            <option value="MS">Montserrat</option>
+                            <option value="MA">Morocco</option>
+                            <option value="MZ">Mozambique</option>
+                            <option value="MM">Myanmar</option>
+                            <option value="NA">Nambia</option>
+                            <option value="NU">Nauru</option>
+                            <option value="NP">Nepal</option>
+                            <option value="AN">Netherland Antilles</option>
+                            <option value="NL">Netherlands (Holland, Europe)</option>
+                            <option value="NV">Nevis</option>
+                            <option value="NC">New Caledonia</option>
+                            <option value="NZ">New Zealand</option>
+                            <option value="NI">Nicaragua</option>
+                            <option value="NE">Niger</option>
+                            <option value="NG">Nigeria</option>
+                            <option value="NW">Niue</option>
+                            <option value="NF">Norfolk Island</option>
+                            <option value="NO">Norway</option>
+                            <option value="OM">Oman</option>
+                            <option value="PK">Pakistan</option>
+                            <option value="PW">Palau Island</option>
+                            <option value="PS">Palestine</option>
+                            <option value="PA">Panama</option>
+                            <option value="PG">Papua New Guinea</option>
+                            <option value="PY">Paraguay</option>
+                            <option value="PE">Peru</option>
+                            <option value="PH">Philippines</option>
+                            <option value="PO">Pitcairn Island</option>
+                            <option value="PL">Poland</option>
+                            <option value="PT">Portugal</option>
+                            <option value="PR">Puerto Rico</option>
+                            <option value="QA">Qatar</option>
+                            <option value="ME">Republic of Montenegro</option>
+                            <option value="RS">Republic of Serbia</option>
+                            <option value="RE">Reunion</option>
+                            <option value="RO">Romania</option>
+                            <option value="RU">Russia</option>
+                            <option value="RW">Rwanda</option>
+                            <option value="NT">St Barthelemy</option>
+                            <option value="EU">St Eustatius</option>
+                            <option value="HE">St Helena</option>
+                            <option value="KN">St Kitts-Nevis</option>
+                            <option value="LC">St Lucia</option>
+                            <option value="MB">St Maarten</option>
+                            <option value="PM">St Pierre &amp; Miquelon</option>
+                            <option value="VC">St Vincent &amp; Grenadines</option>
+                            <option value="SP">Saipan</option>
+                            <option value="SO">Samoa</option>
+                            <option value="AS">Samoa American</option>
+                            <option value="SM">San Marino</option>
+                            <option value="ST">Sao Tome &amp; Principe</option>
+                            <option value="SA">Saudi Arabia</option>
+                            <option value="SN">Senegal</option>
+                            <option value="RS">Serbia</option>
+                            <option value="SC">Seychelles</option>
+                            <option value="SL">Sierra Leone</option>
+                            <option value="SG">Singapore</option>
+                            <option value="SK">Slovakia</option>
+                            <option value="SI">Slovenia</option>
+                            <option value="SB">Solomon Islands</option>
+                            <option value="OI">Somalia</option>
+                            <option value="ZA">South Africa</option>
+                            <option value="ES">Spain</option>
+                            <option value="LK">Sri Lanka</option>
+                            <option value="SD">Sudan</option>
+                            <option value="SR">Suriname</option>
+                            <option value="SZ">Swaziland</option>
+                            <option value="SE">Sweden</option>
+                            <option value="CH">Switzerland</option>
+                            <option value="SY">Syria</option>
+                            <option value="TA">Tahiti</option>
+                            <option value="TW">Taiwan</option>
+                            <option value="TJ">Tajikistan</option>
+                            <option value="TZ">Tanzania</option>
+                            <option value="TH">Thailand</option>
+                            <option value="TG">Togo</option>
+                            <option value="TK">Tokelau</option>
+                            <option value="TO">Tonga</option>
+                            <option value="TT">Trinidad &amp; Tobago</option>
+                            <option value="TN">Tunisia</option>
+                            <option value="TR">Turkey</option>
+                            <option value="TU">Turkmenistan</option>
+                            <option value="TC">Turks &amp; Caicos Is</option>
+                            <option value="TV">Tuvalu</option>
+                            <option value="UG">Uganda</option>
+                            <option value="UA">Ukraine</option>
+                            <option value="AE">United Arab Emirates</option>
+                            <option value="GB" selected="selected">United Kingdom</option>
+                            <option value="US">United States</option>
+                            <option value="UY">Uruguay</option>
+                            <option value="UZ">Uzbekistan</option>
+                            <option value="VU">Vanuatu</option>
+                            <option value="VS">Vatican City State</option>
+                            <option value="VE">Venezuela</option>
+                            <option value="VN">Vietnam</option>
+                            <option value="VB">Virgin Islands (Brit)</option>
+                            <option value="VA">Virgin Islands (USA)</option>
+                            <option value="WK">Wake Island</option>
+                            <option value="WF">Wallis &amp; Futana Is</option>
+                            <option value="YE">Yemen</option>
+                            <option value="ZR">Zaire</option>
+                            <option value="ZM">Zambia</option>
+                            <option value="ZW">Zimbabwe</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        
+        </div><!-- / #credit-card-details -->
+        
+        </fieldset>
+        </div>
+
+
+
+
+<!-- Donate button -->
+
+
+<div style="display: none;" id="donate-button-container">  <fieldset>
+        <p class="disclaimer">By pressing 'Complete my donation' I confirm that the above details are correct and that I have read and agreed to Cancer Research UK's <a href="http://www.cancerresearchuk.org/about-us/utilities/terms-and-conditions/" target="_blank">terms and conditions</a> and <a target="_blank" href="http://www.cancerresearchuk.org/about-us/utilities/privacy-statement/">privacy statement</a>.</p>
+
+          <button class="btn" onclick="donate()" id="donate-button">Complete my donation</button>
+          <img id="donating-spinner" style="display: none; margin: auto; width: 50px; top: 18px; position: relative;" src="https://s3.eu-west-2.amazonaws.com/alice-res/loader-spinner.gif">
+</fieldset>
+
+
+</div>
+
+
+        <script>
+                /**
+               *
+               * Created by Borbás Geri on 12/17/13
+               * Copyright (c) 2013 eppz! development, LLC.
+               *
+               * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+               * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+               * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+               *
+               */
+              
+              
+              var EPPZScrollTo =
+              {
+                  /**
+                   * Helpers.
+                   */
+                  documentVerticalScrollPosition: function()
+                  {
+                      if (self.pageYOffset) return self.pageYOffset; // Firefox, Chrome, Opera, Safari.
+                      if (document.documentElement && document.documentElement.scrollTop) return document.documentElement.scrollTop; // Internet Explorer 6 (standards mode).
+                      if (document.body.scrollTop) return document.body.scrollTop; // Internet Explorer 6, 7 and 8.
+                      return 0; // None of the above.
+                  },
+              
+                  viewportHeight: function()
+                  { return (document.compatMode === "CSS1Compat") ? document.documentElement.clientHeight : document.body.clientHeight; },
+              
+                  documentHeight: function()
+                  { return (document.height !== undefined) ? document.height : document.body.offsetHeight; },
+              
+                  documentMaximumScrollPosition: function()
+                  { return this.documentHeight() - this.viewportHeight(); },
+              
+                  elementVerticalClientPositionById: function(id)
+                  {
+                      var element = document.getElementById(id);
+                      var rectangle = element.getBoundingClientRect();
+                      return rectangle.top;
+                  },
+              
+                  /**
+                   * Animation tick.
+                   */
+                  scrollVerticalTickToPosition: function(currentPosition, targetPosition)
+                  {
+                      var filter = 0.2;
+                      var fps = 60;
+                      var difference = parseFloat(targetPosition) - parseFloat(currentPosition);
+              
+                      // Snap, then stop if arrived.
+                      var arrived = (Math.abs(difference) <= 0.5);
+                      if (arrived)
+                      {
+                          // Apply target.
+                          scrollTo(0.0, targetPosition);
+                          return;
+                      }
+              
+                      // Filtered position.
+                      currentPosition = (parseFloat(currentPosition) * (1.0 - filter)) + (parseFloat(targetPosition) * filter);
+              
+                      // Apply target.
+                      scrollTo(0.0, Math.round(currentPosition));
+              
+                      // Schedule next tick.
+                      setTimeout("EPPZScrollTo.scrollVerticalTickToPosition("+currentPosition+", "+targetPosition+")", (1000 / fps));
+                  },
+              
+                  /**
+                   * For public use.
+                   *
+                   * @param id The id of the element to scroll to.
+                   * @param padding Top padding to apply above element.
+                   */
+                  scrollVerticalToElementById: function(id, padding)
+                  {
+                      var element = document.getElementById(id);
+                      if (element == null)
+                      {
+                          console.warn('Cannot find element with id \''+id+'\'.');
+                          return;
+                      }
+              
+                      var targetPosition = this.documentVerticalScrollPosition() + this.elementVerticalClientPositionById(id) - padding;
+                      var currentPosition = this.documentVerticalScrollPosition();
+              
+                      // Clamp.
+                      var maximumScrollPosition = this.documentMaximumScrollPosition();
+                      if (targetPosition > maximumScrollPosition) targetPosition = maximumScrollPosition;
+              
+                      // Start animation.
+                      this.scrollVerticalTickToPosition(currentPosition, targetPosition);
+                  }
+              };
+              </script>
+
+<script>
+    // Alice code
+
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async function fillDefault(id, val) {
+    for (let character of val) {
+      document.getElementById(id).value += character;
+      await sleep(10);
+    }
+  }
+
+  async function fillWithDefaultValues() {
+    const defaultVals = [
+      {id: 'payment_card-name', val: 'Raphael Mazet'},
+      {id: 'email', val: 'raphmazet@alice.si'},
+      {id: 'cc-number', val: '3569990000000124'},
+      
+    //   {id: 'exp-date', val: '1120'},
+      {id: 'cvv', val: '123'},
+    ];
+
+    for (let defaultVal of defaultVals) {
+      await fillDefault(defaultVal.id, defaultVal.val);
+      await sleep(50);
+    }
+  }
+
+    function startAliceDonation() {
+        if (!window.aliceAlready) {
+            window.aliceAlready = true;
+            document.getElementById('credit-card-details-container').style.display = 'block';
+            document.getElementById('donate-button-container').style.display = 'block';
+            EPPZScrollTo.scrollVerticalToElementById('credit-card-details-container', 20);
+            fillWithDefaultValues();
+        }
+    }
+
+    function readExpDateFrom2Selections() {
+        // TODO may be implemented
+        return '1020';
+    }
+
+  function showDonatingProcessOnButton() {
+    EPPZScrollTo.scrollVerticalToElementById('donate-button', 20);
+    window.donatingOnButtonTimer = setInterval(function() {
+      let oldVal = document.getElementById('donate-button').innerHTML;
+      let newVal = 'Donating';
+      if (!oldVal.includes('...') && oldVal.includes('Donating')) {
+        newVal = oldVal + '.';
+      }
+      document.getElementById('donate-button').innerHTML = newVal;
+    }, 200);
+  }
+
+  function stopShowingDonatingProcessOnButton() {
+    clearInterval(window.donatingOnButtonTimer);
+    document.getElementById('donate-button').innerHTML = 'Donate';
+  }
+
+  function startDonating() {
+    EPPZScrollTo.scrollVerticalToElementById('donate-button', 20);
+    document.getElementById('donating-spinner').style.display = 'inline';
+  }
+
+  function stopDonating() {
+    document.getElementById('donating-spinner').style.display = 'none';
+  }
+
+  async function donate() {
+    try {
+      let email = document.getElementById('email').value;
+      let cvc = document.getElementById('cvv').value;
+    //   let expirationDate = document.getElementById('exp-date').value;
+      let expirationDate = readExpDateFrom2Selections();
+      let number = document.getElementById('cc-number').value;
+      let amount = Number(document.getElementById('single-donation-other-amount').value);
+
+      startDonating();
+      await Alice.sendDonation({
+        email,
+        type: 'Anonymous',
+        projectCode: 'beat-cancer',
+        amount: amount * 100,
+        cardData: {
+            number,
+            expirationDate,
+            cvc
+        },
+        allowAnonymousDonationsForFullUsers: true
+      });
+      
+      stopDonating();
+      alert('Successfully donated');
+    } catch (err) {
+      stopDonating();
+      alert('Donation failed :(');
+      console.error(err);
+    }
+  }
+</script>
 
 <div id="credit-card-details-container"></div>
 </div>
@@ -472,7 +1154,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		
 </script>
 
-<script src="./checkout_cruk_files/main.js"></script>
+<!-- <script src="./checkout_cruk_files/main.js"></script> -->
+<script src='https://stage.clientapi.alice.si/alice.js'></script>
 
 
     
