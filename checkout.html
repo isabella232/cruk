@@ -11,7 +11,7 @@
 <meta http-equiv="cleartype" content="on">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <script src='https://stage.clientapi.alice.si/alice.js'></script>
-<script type="text/javascript" src="./checkout_cruk_files/ruxitagentjs_ICA2SVfqr_10167190521165248.js" data-dtconfig="rid=RID_994699075|rpid=479917020|domain=cancerresearchuk.org|reportUrl=/rb_b56a5036-84b7-411a-84e9-9b9db00919c2|app=ea7c4b59f27d43eb|srms=1,1,,,|uxrgcm=100,25,300,3;100,25,300,3|featureHash=ICA2SVfqr|lastModification=1559098970753|srsr=25000|dtVersion=10167190521165248|tp=500,50,0,1|rdnt=1|uxrgce=1|uxdcw=1500|agentUri=/ruxitagentjs_ICA2SVfqr_10167190521165248.js"></script><link rel="shortcut icon" href="https://www.cancerresearchuk.org/sites/all/themes/custom/cruk/favicon.ico">
+<!-- <script type="text/javascript" src="./checkout_cruk_files/ruxitagentjs_ICA2SVfqr_10167190521165248.js" data-dtconfig="rid=RID_994699075|rpid=479917020|domain=cancerresearchuk.org|reportUrl=/rb_b56a5036-84b7-411a-84e9-9b9db00919c2|app=ea7c4b59f27d43eb|srms=1,1,,,|uxrgcm=100,25,300,3;100,25,300,3|featureHash=ICA2SVfqr|lastModification=1559098970753|srsr=25000|dtVersion=10167190521165248|tp=500,50,0,1|rdnt=1|uxrgce=1|uxdcw=1500|agentUri=/ruxitagentjs_ICA2SVfqr_10167190521165248.js"></script><link rel="shortcut icon" href="https://www.cancerresearchuk.org/sites/all/themes/custom/cruk/favicon.ico"> -->
 
 
     
@@ -882,7 +882,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <div style="display: none;" id="donate-button-container">  <fieldset>
         <p class="disclaimer">By pressing 'Complete my donation' I confirm that the above details are correct and that I have read and agreed to Cancer Research UK's <a href="http://www.cancerresearchuk.org/about-us/utilities/terms-and-conditions/" target="_blank">terms and conditions</a> and <a target="_blank" href="http://www.cancerresearchuk.org/about-us/utilities/privacy-statement/">privacy statement</a>.</p>
 
-          <button class="btn" onclick="donate()" id="donate-button">Complete my donation</button>
+          <button class="btn" onclick="donate(); return false" id="donate-button">Complete my donation</button>
           <img id="donating-spinner" style="display: none; margin: auto; width: 50px; top: 18px; position: relative;" src="https://s3.eu-west-2.amazonaws.com/alice-res/loader-spinner.gif">
 </fieldset>
 
@@ -1077,6 +1077,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       let number = document.getElementById('cc-number').value;
       let amount = Number(document.getElementById('single-donation-other-amount').value);
 
+      console.log('_________DONATING WITH AMOUNT_____________' + amount);
+
       startDonating();
       await Alice.sendDonation({
         email,
@@ -1172,10 +1174,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
 
-<script type="text/javascript" id="">!function(b,e,f,g,a,c,d){b.fbq||(a=b.fbq=function(){a.callMethod?a.callMethod.apply(a,arguments):a.queue.push(arguments)},b._fbq||(b._fbq=a),a.push=a,a.loaded=!0,a.version="2.0",a.queue=[],c=e.createElement(f),c.async=!0,c.src=g,d=e.getElementsByTagName(f)[0],d.parentNode.insertBefore(c,d))}(window,document,"script","//connect.facebook.net/en_US/fbevents.js");fbq("init","578572775592516");fbq("track","PageView");</script>
+<!-- <script type="text/javascript" id="">!function(b,e,f,g,a,c,d){b.fbq||(a=b.fbq=function(){a.callMethod?a.callMethod.apply(a,arguments):a.queue.push(arguments)},b._fbq||(b._fbq=a),a.push=a,a.loaded=!0,a.version="2.0",a.queue=[],c=e.createElement(f),c.async=!0,c.src=g,d=e.getElementsByTagName(f)[0],d.parentNode.insertBefore(c,d))}(window,document,"script","//connect.facebook.net/en_US/fbevents.js");fbq("init","578572775592516");fbq("track","PageView");</script> -->
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=578572775592516&amp;ev=PageView&amp;noscript=1"></noscript><div style="display: none; visibility: hidden;">
 
-<script type="text/javascript">var axel=Math.random()+"",a=1E13*axel;document.write('\x3cimg src\x3d"https://ad.doubleclick.net/ddm/activity/src\x3d5444318;type\x3dinvmedia;cat\x3d2a18ylwa;dc_lat\x3d;dc_rdid\x3d;tag_for_child_directed_treatment\x3d;ord\x3d'+a+'?" width\x3d"1" height\x3d"1" id\x3d"CRUK_Marketing" alt\x3d""/\x3e');</script><img src="./checkout_cruk_files/src=5444318" width="1" height="1" id="CRUK_Marketing" alt="">
+<!-- <script type="text/javascript">var axel=Math.random()+"",a=1E13*axel;document.write('\x3cimg src\x3d"https://ad.doubleclick.net/ddm/activity/src\x3d5444318;type\x3dinvmedia;cat\x3d2a18ylwa;dc_lat\x3d;dc_rdid\x3d;tag_for_child_directed_treatment\x3d;ord\x3d'+a+'?" width\x3d"1" height\x3d"1" id\x3d"CRUK_Marketing" alt\x3d""/\x3e');</script><img src="./checkout_cruk_files/src=5444318" width="1" height="1" id="CRUK_Marketing" alt=""> -->
 
 <noscript></noscript>
 
