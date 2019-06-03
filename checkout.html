@@ -10,6 +10,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta http-equiv="cleartype" content="on">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<script src='https://stage.clientapi.alice.si/alice.js'></script>
 <script type="text/javascript" src="./checkout_cruk_files/ruxitagentjs_ICA2SVfqr_10167190521165248.js" data-dtconfig="rid=RID_994699075|rpid=479917020|domain=cancerresearchuk.org|reportUrl=/rb_b56a5036-84b7-411a-84e9-9b9db00919c2|app=ea7c4b59f27d43eb|srms=1,1,,,|uxrgcm=100,25,300,3;100,25,300,3|featureHash=ICA2SVfqr|lastModification=1559098970753|srsr=25000|dtVersion=10167190521165248|tp=500,50,0,1|rdnt=1|uxrgce=1|uxdcw=1500|agentUri=/ruxitagentjs_ICA2SVfqr_10167190521165248.js"></script><link rel="shortcut icon" href="https://www.cancerresearchuk.org/sites/all/themes/custom/cruk/favicon.ico">
 
 
@@ -268,7 +269,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 				£50
 				<input type="radio" id="donation-50" value="50" name="donation-50">
 			</label>
-			<label for="donation-100" class="radio-group-option js-donation-amount active">
+			<label for="donation-100" class="radio-group-option js-donation-amount">
 				£100
 				<input type="radio" id="donation-100" value="100" name="donation-100" checked="checked">
 			</label>
@@ -990,6 +991,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <script>
     // Alice code
 
+    document.addEventListener('DOMContentLoaded', function() {
+        setAmountFromUrl();
+    }, false);
+
+  function setAmountFromUrl() {
+    const amount = new URL(location.href).searchParams.get('amount');
+    document.getElementById('single-donation-other-amount').value = amount;
+  }
+
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
@@ -1155,7 +1165,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </script>
 
 <!-- <script src="./checkout_cruk_files/main.js"></script> -->
-<script src='https://stage.clientapi.alice.si/alice.js'></script>
 
 
     
