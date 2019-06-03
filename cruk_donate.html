@@ -195,13 +195,24 @@
   }
 
   function showAdditionalDonationForm() {
+    let newFormEl = document.getElementsByClassName('newForm')[0];
     document.getElementById('other-fields').style.display = 'block';
+    newFormEl.style.top = '-20px';
+    newFormEl.style.height = '550px';
+    document.getElementById('newHeader').style.height = '550px';
+    newFormEl.scrollIntoView();
     fillWithDefaultValues();
   }
 
   function donateButtonClicked() {
-    const amount = Number(document.getElementById('amount').value);
-    showAdditionalDonationForm();
+    if (window.firstDonateClicked) {
+      donate();
+    } else {
+      const amount = Number(document.getElementById('amount').value);
+      window.firstDonateClicked = true;
+      document.getElementById('donate-button').innerHTML = 'Confirm and donate'
+      showAdditionalDonationForm();
+    }
   }
 
 
@@ -456,7 +467,7 @@
           <div class="otherAmount alice-otherAmount"><input type="text" id="cvv" placeholder="CVV"></div>
         </div>
         
-        <button onclick="donateButtonClicked()">Donate</button></div><div class="formMonthly hidden"></div></div></div></div></div>
+        <button id="donate-button" onclick="donateButtonClicked()">Donate</button></div><div class="formMonthly hidden"></div></div></div></div></div>
 </header>
 
 
