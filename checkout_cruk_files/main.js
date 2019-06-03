@@ -412,7 +412,7 @@ module.exports = HandlebarsCompiler.template({"1":function(depth0,helpers,partia
 },"13":function(depth0,helpers,partials,data) {
   var helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
   return "					<img src=\""
-    + escapeExpression(((helpers.filter_asset || (depth0 && depth0.filter_asset) || helperMissing).call(depth0, "https://d77hrzbdrgc46.cloudfront.net/assets/themes/cruk/campaign/images/credit-debit-card.png", {"name":"filter_asset","hash":{},"data":data})))
+    + escapeExpression(((helpers.filter_asset || (depth0 && depth0.filter_asset) || helperMissing).call(depth0, "/assets/themes/cruk/campaign/images/credit-debit-card.png", {"name":"filter_asset","hash":{},"data":data})))
     + "\" alt=\"Pay with Credit/Debit cards\" />\n";
 },"15":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
