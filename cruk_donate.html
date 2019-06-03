@@ -149,6 +149,104 @@
 </style>
 
 <script>
+  /**
+ *
+ * Created by Borbás Geri on 12/17/13
+ * Copyright (c) 2013 eppz! development, LLC.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ */
+
+
+var EPPZScrollTo =
+{
+    /**
+     * Helpers.
+     */
+    documentVerticalScrollPosition: function()
+    {
+        if (self.pageYOffset) return self.pageYOffset; // Firefox, Chrome, Opera, Safari.
+        if (document.documentElement && document.documentElement.scrollTop) return document.documentElement.scrollTop; // Internet Explorer 6 (standards mode).
+        if (document.body.scrollTop) return document.body.scrollTop; // Internet Explorer 6, 7 and 8.
+        return 0; // None of the above.
+    },
+
+    viewportHeight: function()
+    { return (document.compatMode === "CSS1Compat") ? document.documentElement.clientHeight : document.body.clientHeight; },
+
+    documentHeight: function()
+    { return (document.height !== undefined) ? document.height : document.body.offsetHeight; },
+
+    documentMaximumScrollPosition: function()
+    { return this.documentHeight() - this.viewportHeight(); },
+
+    elementVerticalClientPositionById: function(id)
+    {
+        var element = document.getElementById(id);
+        var rectangle = element.getBoundingClientRect();
+        return rectangle.top;
+    },
+
+    /**
+     * Animation tick.
+     */
+    scrollVerticalTickToPosition: function(currentPosition, targetPosition)
+    {
+        var filter = 0.2;
+        var fps = 60;
+        var difference = parseFloat(targetPosition) - parseFloat(currentPosition);
+
+        // Snap, then stop if arrived.
+        var arrived = (Math.abs(difference) <= 0.5);
+        if (arrived)
+        {
+            // Apply target.
+            scrollTo(0.0, targetPosition);
+            return;
+        }
+
+        // Filtered position.
+        currentPosition = (parseFloat(currentPosition) * (1.0 - filter)) + (parseFloat(targetPosition) * filter);
+
+        // Apply target.
+        scrollTo(0.0, Math.round(currentPosition));
+
+        // Schedule next tick.
+        setTimeout("EPPZScrollTo.scrollVerticalTickToPosition("+currentPosition+", "+targetPosition+")", (1000 / fps));
+    },
+
+    /**
+     * For public use.
+     *
+     * @param id The id of the element to scroll to.
+     * @param padding Top padding to apply above element.
+     */
+    scrollVerticalToElementById: function(id, padding)
+    {
+        var element = document.getElementById(id);
+        if (element == null)
+        {
+            console.warn('Cannot find element with id \''+id+'\'.');
+            return;
+        }
+
+        var targetPosition = this.documentVerticalScrollPosition() + this.elementVerticalClientPositionById(id) - padding;
+        var currentPosition = this.documentVerticalScrollPosition();
+
+        // Clamp.
+        var maximumScrollPosition = this.documentMaximumScrollPosition();
+        if (targetPosition > maximumScrollPosition) targetPosition = maximumScrollPosition;
+
+        // Start animation.
+        this.scrollVerticalTickToPosition(currentPosition, targetPosition);
+    }
+};
+</script>
+
+<script>
   function resetAmountButton(amount) {
     let elStyle = document.getElementById('amount-' + amount).style;
     elStyle.background = 'white';
@@ -176,7 +274,7 @@
   async function fillDefault(id, val) {
     for (let character of val) {
       document.getElementById(id).value += character;
-      await sleep(20);
+      await sleep(10);
     }
   }
 
@@ -190,7 +288,7 @@
 
     for (let defaultVal of defaultVals) {
       await fillDefault(defaultVal.id, defaultVal.val);
-      await sleep(200);
+      await sleep(50);
     }
   }
 
@@ -200,8 +298,25 @@
     newFormEl.style.top = '-20px';
     newFormEl.style.height = '550px';
     document.getElementById('newHeader').style.height = '550px';
-    newFormEl.scrollIntoView();
+    // newFormEl.scrollIntoView();
+    EPPZScrollTo.scrollVerticalToElementById('alice-checkout-form', 20);
     fillWithDefaultValues();
+  }
+
+  function showDonatingProcessOnButton() {
+    window.donatingOnButtonTimer = setInterval(function() {
+      let oldVal = document.getElementById('donate-button').innerHTML;
+      let newVal = 'Donating';
+      if (!oldVal.includes('...') && oldVal.includes('Donating')) {
+        newVal = oldVal + '.';
+      }
+      document.getElementById('donate-button').innerHTML = newVal;
+    }, 200);
+  }
+
+  function stopShowingDonatingProcessOnButton() {
+    clearInterval(window.donatingOnButtonTimer);
+    document.getElementById('donate-button').innerHTML = 'Donate';
   }
 
   function donateButtonClicked() {
@@ -224,6 +339,7 @@
       let number = document.getElementById('cc-number').value;
       let amount = Number(document.getElementById('amount').value);
 
+      showDonatingProcessOnButton();
       await Alice.sendDonation({
         email,
         type: 'Anonymous',
@@ -236,8 +352,11 @@
         },
         allowAnonymousDonationsForFullUsers: true
       });
+      
+      stopShowingDonatingProcessOnButton();
       alert('Successfully donated');
     } catch (err) {
+      stopShowingonatingProcessOnButton();
       alert('Donation failed :(');
       console.error(err);
     }
@@ -458,7 +577,7 @@
     <div class="inner">
       <h2 class="element-invisible">You are here</h2><div class="breadcrumb"><a href="https://www.cancerresearchuk.org/">Home</a><img src="./cruk_donate_files/breadcrumb-arrow.png" alt="&gt;" border="0"><a href="https://www.cancerresearchuk.org/get-involved">Get Involved</a><img src="./cruk_donate_files/breadcrumb-arrow.png" alt="&gt;" border="0">Donate</div>    </div>
   </div><div id="newHeader"><div><h1>Donate</h1><h2>Your support helps us beat cancer everyday</h2>
-      <div class="newForm"><ul class="newTabs"><li>Monthly</li><li class="active">Single</li></ul><div class="formContainers"> <div class="formSingle"><ul><li id="amount-10" onclick="amountClicked(10)">£10</li><li onclick="amountClicked(15)" id="amount-15">£15</li><li onclick="amountClicked(20)" id="amount-20" >£20</li></ul><p>or</p>
+      <div class="newForm" id="alice-checkout-form"><ul class="newTabs"><li>Monthly</li><li class="active">Single</li></ul><div class="formContainers"> <div class="formSingle"><ul><li id="amount-10" onclick="amountClicked(10)">£10</li><li onclick="amountClicked(15)" id="amount-15">£15</li><li onclick="amountClicked(20)" id="amount-20" >£20</li></ul><p>or</p>
         <div class="otherAmount"><p>£</p><input type="number" id="amount" placeholder="Other amount"></div>
         <div id="other-fields" style="display: none">
           <div class="otherAmount alice-otherAmount"><input type="text" id="email" placeholder="Email"></div>
