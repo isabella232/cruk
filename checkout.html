@@ -11,6 +11,10 @@
 <meta http-equiv="cleartype" content="on">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <script src='https://stage.clientapi.alice.si/alice.js'></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <!-- <script type="text/javascript" src="./checkout_cruk_files/ruxitagentjs_ICA2SVfqr_10167190521165248.js" data-dtconfig="rid=RID_994699075|rpid=479917020|domain=cancerresearchuk.org|reportUrl=/rb_b56a5036-84b7-411a-84e9-9b9db00919c2|app=ea7c4b59f27d43eb|srms=1,1,,,|uxrgcm=100,25,300,3;100,25,300,3|featureHash=ICA2SVfqr|lastModification=1559098970753|srsr=25000|dtVersion=10167190521165248|tp=500,50,0,1|rdnt=1|uxrgce=1|uxdcw=1500|agentUri=/ruxitagentjs_ICA2SVfqr_10167190521165248.js"></script><link rel="shortcut icon" href="https://www.cancerresearchuk.org/sites/all/themes/custom/cruk/favicon.ico"> -->
 
 
@@ -1094,10 +1098,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       });
       
       stopDonating();
-      alert('Successfully donated');
+      toastr.success('Successfully donated');
+    //   alert('Successfully donated');
     } catch (err) {
       stopDonating();
-      alert('Donation failed :(');
+      toastr.error('Donation failed');
       console.error(err);
     }
   }
