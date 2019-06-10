@@ -327,14 +327,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <p class="sub">Choose how you would like your donation to fund our work</p>
 
-<label for="restriction-greatest" class="checkbox-button-group active">
-  <input type="radio" id="restriction-greatest" value="greatest" name="donation-restriction" checked="checked">
+<label for="restriction-greatest" class="checkbox-button-group">
+  <input type="radio" id="restriction-greatest" value="greatest" name="donation-restriction">
     Where the need is greatest - 
     <span>Your donation will help beat all cancers sooner</span>
 </label>
 
-<label for="restriction-cancer" class="checkbox-button-group cancer">
-  <input type="radio" id="restriction-cancer" value="cancer" name="donation-restriction">
+<label for="restriction-cancer" class="checkbox-button-group cancer active">
+  <input type="radio" id="restriction-cancer" value="cancer"  checked="checked" name="donation-restriction">
   Choose a cancer type or an area of research
 </label>
 </fieldset>
@@ -344,6 +344,85 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 				background-color: #ffffff;
 			}
 </style>
+
+
+<!-- Alex copied cancer type fieldset - BEGIN -->
+
+<fieldset class="step-1" id="donation-restriction-options"><h3>Donate by cancer type or research area</h3>
+
+    <p>Choose where you'd like your money to go from the options below or see the drop down for more.</p>
+    
+    <ul class="cancer-types">
+            <li onclick="pickCancerType('breast-cancer');" data-value="RES003" class="first">
+                <img src="https://d77hrzbdrgc46.cloudfront.net//assets/T8PCRa4zh5i-OmXj1wYoow==/restrictions/RES003-80x80.png" alt="Breast cancer">
+                <span>Breast cancer</span>
+            </li>
+            <li onclick="pickCancerType('brain-tumours');" data-value="RES038">
+                <img src="https://d77hrzbdrgc46.cloudfront.net//assets/T8PCRa4zh5i-OmXj1wYoow==/restrictions/RES038-80x80.png" alt="Brain tumours">
+                <span>Brain tumours</span>
+            </li>
+            <li onclick="pickCancerType('bowel-cancer');" data-value="RES005">
+                <img src="https://d77hrzbdrgc46.cloudfront.net//assets/T8PCRa4zh5i-OmXj1wYoow==/restrictions/RES005-80x80.png" alt="Bowel cancer">
+                <span>Bowel cancer</span>
+            </li>
+            <li onclick="pickCancerType('childrens-cancer');" data-value="RES814">
+                <img src="https://d77hrzbdrgc46.cloudfront.net//assets/T8PCRa4zh5i-OmXj1wYoow==/restrictions/RES814-80x80.png" alt="Children's cancers">
+                <span>Children's cancers</span>
+            </li>
+            <li onclick="pickCancerType('skin-cancer');" data-value="RES490">
+                <img src="https://d77hrzbdrgc46.cloudfront.net//assets/T8PCRa4zh5i-OmXj1wYoow==/restrictions/RES490-80x80.png" alt="Skin cancer">
+                <span>Skin cancer</span>
+            </li>
+        <li onclick="pickCancerType('greatest-need');" data-value="all">
+            <img src="https://d77hrzbdrgc46.cloudfront.net//assets/T8PCRa4zh5i-OmXj1wYoow==/themes/cruk/campaign/images/all-cancers-80x80.png" alt="Where the need is greatest">
+            <span>Give where need is greatest</span>
+        </li>
+    </ul>
+    
+    <!-- <div class="cancer-selection">
+        <label for="cancer-options">View all the cancer types and areas of research to which you can donate</label>
+            <select onchange="this.blur()" id="cancer-options" name="cancer-options">
+                <option value="">Please select from all options</option>
+                        <option value="all">Give where need is greatest</option>
+                    <option value="RES005">Bowel cancer</option>
+                    <option value="RES038">Brain tumours</option>
+                    <option value="RES003">Breast cancer</option>
+                    <option value="RES814">Children's cancers</option>
+                    <option value="RES828">Developing better treatments</option>
+                    <option value="RES769">Diagnosing cancer early</option>
+                    <option value="RES009">Leukaemia</option>
+                    <option value="RES004">Lung cancer</option>
+                    <option value="RES010">Lymphoma</option>
+                    <option value="RES085">Oesophageal cancer</option>
+                    <option value="RES008">Ovarian cancer</option>
+                    <option value="RES011">Pancreatic cancer</option>
+                    <option value="RES813">Preventing cancer</option>
+                    <option value="RES006">Prostate cancer</option>
+                    <option value="RES829">Rare cancers</option>
+                    <option value="RES490">Skin cancer</option>
+                    <option value="RES050">Understanding cancer</option>
+                <option value="none">I want to donate to other research</option>
+            </select>
+    </div> -->
+    </fieldset>
+
+<!-- Alex copied cancer type fieldset - END -->
+
+
+<!-- Alex opied cancer type selected - BEGIN -->
+
+<fieldset style="display:none;" class="step-1" id="donation-restriction-selected"><div class="summary-container">
+	<h3>You are donating to help beat <em id="cancer-type-name">bowel cancer</em></h3>
+
+	<div class="image-container">
+		<img id='selected-cancer-type-img' src="https://d77hrzbdrgc46.cloudfront.net//assets/T8PCRa4zh5i-OmXj1wYoow==/restrictions/RES005-220x220.png" alt="Bowel cancer">
+		<span id="cancer-type-name-2">Bowel cancer</span>
+	</div>
+
+	<a onclick="undoCancerPick();" id="change-restriction" data-code="RES005" class="edit" style="cursor: pointer;">Edit</a>
+</div></fieldset>
+
+<!-- Alex opied cancer type selected - END -->
 
 		<fieldset>
 			<h2>Donation type</h2>
@@ -1072,6 +1151,35 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     document.getElementById('donating-spinner').style.display = 'none';
   }
 
+  function getSelectedCancerType() {
+    return window.selectedCancerType || 'greatest-need';
+  }
+
+  function undoCancerPick() {
+    window.selectedCancerType = '';
+    document.getElementById('donation-restriction-options').style.display = 'block';
+    document.getElementById('donation-restriction-selected').style.display = 'none';
+  }
+
+  function pickCancerType(type) {
+    window.selectedCancerType = type;
+    document.getElementById('donation-restriction-options').style.display = 'none';
+    document.getElementById('donation-restriction-selected').style.display = 'block';
+    document.getElementById('cancer-type-name').innerHTML = type.replace('-', ' ');
+    document.getElementById('cancer-type-name-2').innerHTML = type.replace('-', ' ');
+
+    cancerTypeUrls = {
+        'breast-cancer': 'https://d77hrzbdrgc46.cloudfront.net//assets/T8PCRa4zh5i-OmXj1wYoow==/restrictions/RES003-80x80.png',
+        'brain-tumours': 'https://d77hrzbdrgc46.cloudfront.net//assets/T8PCRa4zh5i-OmXj1wYoow==/restrictions/RES038-80x80.png',
+        'bowel-cancer': 'https://d77hrzbdrgc46.cloudfront.net//assets/T8PCRa4zh5i-OmXj1wYoow==/restrictions/RES005-80x80.png',
+        'childrens-cancer': 'https://d77hrzbdrgc46.cloudfront.net//assets/T8PCRa4zh5i-OmXj1wYoow==/restrictions/RES814-80x80.png',
+        'skin-cancer': 'https://d77hrzbdrgc46.cloudfront.net//assets/T8PCRa4zh5i-OmXj1wYoow==/restrictions/RES490-80x80.png',
+        'greatest-need': 'https://d77hrzbdrgc46.cloudfront.net//assets/T8PCRa4zh5i-OmXj1wYoow==/themes/cruk/campaign/images/all-cancers-80x80.png'
+    };
+    const imgUrl = cancerTypeUrls[type] || cancerTypeUrls['greatest-need'];
+    document.getElementById('selected-cancer-type-img').setAttribute('src', imgUrl);
+  }
+
   async function donate() {
     try {
       let email = document.getElementById('email').value;
@@ -1084,10 +1192,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       console.log('_________DONATING WITH AMOUNT_____________' + amount);
 
       startDonating();
+      let cancerType = getSelectedCancerType();
       await Alice.sendDonation({
         email,
         type: 'Anonymous',
-        projectCode: 'beat-cancer',
+        // projectCode: 'beat-cancer',
+        projectCode: cancerType,
         amount: amount * 100,
         cardData: {
             number,
@@ -1098,7 +1208,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       });
       
       stopDonating();
-      toastr.success('Successfully donated');
+      toastr.success('Successfully donated to project: ' + cancerType);
     //   alert('Successfully donated');
     } catch (err) {
       stopDonating();
@@ -1251,6 +1361,6 @@ window.adalyserTracker("create",{campaignCookieTimeout:15552E3,conversionCookieT
 
 <script type="text/javascript" id="">google_tag_manager["GTM-WRBGT2"].macro(1556).event&&google_tag_manager["GTM-WRBGT2"].macro(1557)(google_tag_manager["GTM-WRBGT2"].macro(1574).event,google_tag_manager["GTM-WRBGT2"].macro(1591).eventCat,google_tag_manager["GTM-WRBGT2"].macro(1608).eventAct,google_tag_manager["GTM-WRBGT2"].macro(1625).eventLab);</script>
 
-
+<link rel="stylesheet" href="fonts/font-linker.css" />
 
 </body></html>
